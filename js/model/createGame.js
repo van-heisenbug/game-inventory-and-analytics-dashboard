@@ -83,14 +83,14 @@ export default function createGame({ title, price, stock, tags = [] } = {}) {
   };
 }
 
-const entry = {
-  title: "Hello: Test",
-  price: 54.23,
-  stock: 24,
-  tags: ["RPG", "MOBA"],
-};
+// const entry = {
+//   title: "Hello: Test",
+//   price: 54.23,
+//   stock: 24,
+//   tags: ["RPG", "MOBA"],
+// };
 
-const newGame = createGame(entry);
+// const newGame = createGame(entry);
 
 // console.log(newGame);
 // console.log(newGame.getDateAdded());
