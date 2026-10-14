@@ -9,7 +9,7 @@ export default function createGame({ title, price, stock, tags = [] } = {}) {
 
   if (!Number.isInteger(stock) || stock < 0) {
     throw new TypeError(
-      `The stock value must be a non-negative number! Received: ${stock}`,
+      `The stock value must be a non-negative integer! Received: ${stock}`,
     );
   }
 
