@@ -4,9 +4,7 @@
 
 export default function createOrder({
   buyerId,
-  buyerName,
   paymentMethod,
-  // lineItem's subTotal is calculated from validateAndNormalizeOrderEntry()
   lineItem = [],
 } = {}) {
   const ORDER_ID = crypto.randomUUID();
@@ -15,6 +13,10 @@ export default function createOrder({
 
   const getOrderId = () => {
     return ORDER_ID;
+  };
+
+  const getBuyerId = () => {
+    return buyerId;
   };
 
   const getDateCreated = () => {
@@ -26,6 +28,7 @@ export default function createOrder({
     return structuredClone(lineItem);
   };
 
+  // TODO================= Will replace this entire line
   // Using Array.reduce()
   const getTotalCost = () => {
     // Check if line item is an array
@@ -63,6 +66,8 @@ export default function createOrder({
         );
       }
 
+      console.log(currentItem);
+
       // Actual calculation.
       // converting to cents for precision as per AI. Haha
       const currentItemSubTotalInCents = currentItem.subTotal * 100;
@@ -76,10 +81,13 @@ export default function createOrder({
     // and use decimal only for display
     return totalCost / 100;
   };
+  // TODO================= Will replace this entire line
+  // This is incorrect. I will need to check first if the game ordered
+  // from the view actually exists internally
+  // I should also be calculating in cents and only use decimal for diplay
 
   return {
-    buyerId,
-    buyerName,
+    getBuyerId,
     paymentMethod,
     getOrderId,
     getDateCreated,
@@ -90,23 +98,18 @@ export default function createOrder({
 
 const entry = createOrder({
   buyerId: 43,
-  buyerName: "Jason Bourne",
   paymentMethod: "PayPal",
   lineItem: [
     {
       gameId: 3,
       quantity: 2,
-      subTotal: 90.43,
-      gameTags: ["RPG"],
     },
     {
       gameId: 4,
       quantity: 1,
-      subTotal: 55.12,
-      gameTags: ["gameTags"],
     },
   ],
 });
 
-console.log(entry);
+// console.log(entry);
 console.log(entry.getTotalCost());

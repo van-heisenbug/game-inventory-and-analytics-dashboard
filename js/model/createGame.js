@@ -29,6 +29,61 @@ export default function createGame({ title, price, stock, tags = [] } = {}) {
   const DATE_ADDED = new Date().toISOString();
   const GAME_ID = crypto.randomUUID();
 
+  const getTitle = () => {
+    return title;
+  };
+
+  const setTitle = (newTitle) => {
+    title = newTitle;
+  };
+
+  const getPrice = () => {
+    return price;
+  };
+
+  const setPrice = (newPrice) => {
+    if (typeof newPrice !== "number" || !Number.isFinite(newPrice)) {
+      throw new TypeError(
+        `newPrice must be a valid number! Received: ${newPrice}`,
+      );
+    }
+
+    price = Math.round(newPrice * 100);
+  };
+
+  const getTags = () => {
+    return structuredClone(tags);
+  };
+
+  const addTags = (newTags) => {
+    if (!Array.isArray(newTags)) {
+      throw new TypeError(`newTags must be an array! Received: ${newTags}`);
+    }
+
+    if (newTags.length === 0) {
+      throw new TypeError(
+        `newTags must contain at least one item! Received: ${newTags}`,
+      );
+    }
+
+    const cleanedNewTags = cleanTags(newTags);
+
+    // Spread operator
+    // Because it's a function call
+    // Remember this: The opposite of Spread is Rest
+    tags.push(...cleanedNewTags);
+  };
+
+  const removeTag = (tagName) => {
+    const tagPosition = tags.indexOf(tagName);
+
+    // Because indexOf() may return -1
+    // Only remove if tag really exists
+    if (tagPosition !== -1) {
+      tags.splice(tagPosition, 1);
+    }
+  };
+
   const getDateAdded = () => {
     // Returns string value - Immutable
     return DATE_ADDED;
@@ -57,7 +112,7 @@ export default function createGame({ title, price, stock, tags = [] } = {}) {
   const removeStock = (quantity) => {
     if (!Number.isInteger(quantity) || quantity <= 0) {
       throw new TypeError(
-        `Quantity must be a positive number greater than 1! Received: ${typeof quantity} : ${quantity}`,
+        `Quantity must be a positive number greater than 0! Received: ${typeof quantity} : ${quantity}`,
       );
     }
 
@@ -72,9 +127,13 @@ export default function createGame({ title, price, stock, tags = [] } = {}) {
   };
 
   return {
-    title,
-    price,
-    tags,
+    getTitle,
+    setTitle,
+    getPrice,
+    setPrice,
+    getTags,
+    addTags,
+    removeTag,
     getDateAdded,
     getGameId,
     getStock,
@@ -83,15 +142,63 @@ export default function createGame({ title, price, stock, tags = [] } = {}) {
   };
 }
 
-// const entry = {
-//   title: "Hello: Test",
-//   price: 54.23,
-//   stock: 24,
-//   tags: ["RPG", "MOBA"],
-// };
+// I already have a function like this in the View
+// Just copying for now. Will refactor later.
+// For tags
+// Returns an array of valid string tags
+function cleanTags(rawTags) {
+  if (!Array.isArray(rawTags)) {
+    throw new TypeError(`Tags must be an array! Received: ${rawTags}`);
+  }
 
-// const newGame = createGame(entry);
+  if (rawTags.length === 0) {
+    throw new TypeError(
+      `Tags must contain at least one item! Received: ${rawTags}`,
+    );
+  }
 
+  // If the rawTags is an array with at least one value. Continue below.
+
+  // If there are invalid tags, return them as invalidTags
+  const invalidTags = rawTags.filter(
+    // I'll keep the instanceof because it made me learn the difference
+    // between && and ||
+    (tag) => typeof tag !== "string" && !(tag instanceof String),
+  );
+
+  // If there are invalid tags.
+  if (invalidTags.length !== 0) {
+    throw new TypeError(
+      `Tags should be an array of strings! Invalid Tags: ${invalidTags}`,
+    );
+  }
+
+  // If rawTags are all strings, trim spaces
+  const tags = rawTags.map((tag) => tag.trim().replace(/\s+/g, " "));
+
+  return tags;
+}
+
+const entry = {
+  title: "Hello: Test",
+  price: 54.23,
+  stock: 24,
+  tags: ["RPG", "MOBA"],
+};
+
+const newGame = createGame(entry);
+
+// console.log(newGame.getTags());
+console.log(newGame.getPrice());
+newGame.setPrice(4598876.23);
+console.log(newGame.getPrice());
+// newGame.addTags(["Team Play", "Dota 2", "PlayerIO", "Test"]);
+// console.log(newGame.getTags());
+// newGame.removeTag("Team Play");
+// console.log(newGame.getTags());
+// newGame.addTags(["232", "/241", "  . ;,;;/", "testing"]);
+// console.log(newGame.getTags());
+// console.log(newGame.getPrice());
 // console.log(newGame);
 // console.log(newGame.getDateAdded());
 // console.log(newGame.getGameId());

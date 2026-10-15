@@ -72,7 +72,9 @@ export default function validateAndNormalizeGameEntry(
 
   // Stock only accepts plain number.
   if (!isValidStock(rawStock)) {
-    throw new TypeError(`Stock must be a valid number! Received: ${rawStock}`);
+    throw new TypeError(
+      `Stock must be a valid number with no decimal point! Received: ${rawStock}`,
+    );
   }
 
   // Final accepted values
@@ -80,7 +82,8 @@ export default function validateAndNormalizeGameEntry(
   // title and rawTitle feels useless here but I'll keep it like this for now.
 
   // Converting to number because these are trimmed strings
-  const price = Number(rawPrice);
+  // Converting to cents
+  const price = Number(rawPrice) * 100;
   const stock = Number(rawStock);
   const tags = cleanTags(tagsInput);
 
@@ -150,3 +153,12 @@ function cleanTags(rawTags) {
 
   return tags;
 }
+
+// const entry = validateAndNormalizeGameEntry("Hello Garcie", "24.52", "19", [
+//   "RPG",
+//   "MOBA",
+// ]);
+// console.log(entry);
+
+// console.log(typeof entry.price);
+// console.log(typeof entry.stock);
