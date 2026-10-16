@@ -1,15 +1,10 @@
-# inventory
-
-- gameId
-- orderId
-
 # game
 
 - id
 - name
-- stock
 - price
 - genre
+- stock
 
 # user
 
