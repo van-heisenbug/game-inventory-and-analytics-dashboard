@@ -1,8 +1,8 @@
 // # IMPORTS
-import { Game } from "../components/Game.js";
-import { Order } from "../components/Order.js";
+import { Game } from "./Game.js";
 
-export function LineItem(gameId, quantity) {
+// # LINE ITEAM FACTORY
+export function LineItem({ gameId, quantity } = {}) {
   const id = crypto.randomUUID();
   let subTotal = null;
 
@@ -12,36 +12,43 @@ export function LineItem(gameId, quantity) {
   const getQuantity = () => quantity;
   const getSubTotal = () => {
     // Look from localStorage
-    const game0 = {
+    // # TODO
+    // Loop through the inventory and find the game.
+    // # TODO
+
+    // Testing for Order totalCost
+    const game1 = Game({
       name: "Dota 1",
-      stock: 8,
-      price: 2452,
+      stock: 22,
+      price: 10000,
       genre: "RPG",
-      testId: "5b423e10-926a-24-ade4-25c83a852b61",
-    };
+      testId: "test1",
+    });
 
-    const game1 = {
+    const game2 = Game({
       name: "Dota 2",
-      stock: 52,
-      price: 3333,
-      genre: "RPG",
-      testId: "5b423e10-926a-4ba3-ade4-25c83a852b61",
-    };
+      stock: 2,
+      price: 1000,
+      genre: "WINDOWS PC",
+      testId: "test2",
+    });
 
-    const game2 = {
-      name: "World of Warcraft 3",
-      stock: 14,
-      price: 100,
-      genre: "RPG",
-      testId: "5b423e10-926a-4ba3-1241515-25c83a852b61",
-    };
+    const game3 = Game({
+      name: "Star Craft 2",
+      stock: 12,
+      price: 12900,
+      genre: "MOBA",
+      testId: "test3",
+    });
 
     const inventory = [];
-    inventory.push(Game(game0));
-    inventory.push(Game(game1));
-    inventory.push(Game(game2));
-    // Loop through the inventory and find the game.
+    inventory.push(game1);
+    inventory.push(game2);
+    inventory.push(game3);
+    // END OF MOCK INVENTORY ARRAY
+
     // Check README.md
+    // TODO - still no actual inventory array created.
     const isGameFound = inventory.find((game) => game.getId() === gameId);
 
     // If not found.
@@ -90,6 +97,3 @@ export function LineItem(gameId, quantity) {
     reduceQuantity,
   };
 }
-
-const item1 = LineItem("5b423e10-926a-4ba3-ade4-25c83a852b61", 5);
-console.log(item1.getSubTotal());

@@ -95,22 +95,3 @@ export function Game({ name, stock, price, genre, testId } = {}) {
     removeStock,
   };
 }
-
-// const entry = {
-//   name: "Dota 2",
-//   stock: 24,
-//   price: 2452,
-//   genre: "RPG",
-// };
-
-// const game1 = Game(entry);
-// console.log(game1.getStock());
-// console.log(game1.getStockHistory());
-// game1.addStock(6, STOCK_CHANGE_REASON.RESTOCK);
-// console.log(game1.getStock());
-// console.log(game1.getStockHistory());
-// console.log(game1.removeStock(30, STOCK_CHANGE_REASON.SALE));
-// console.log(game1.getStock());
-// console.log(game1.getStockHistory());
-// game1.removeStock(1);
-// console.log(game1.getStock());

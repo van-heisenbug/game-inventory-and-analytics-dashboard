@@ -1,4 +1,6 @@
 // # IMPORTS
+
+// # USER FACTORY
 export function User(name, address, age, role) {
   const id = crypto.randomUUID();
 

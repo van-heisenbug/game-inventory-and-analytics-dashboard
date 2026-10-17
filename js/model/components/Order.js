@@ -1,11 +1,12 @@
 // # IMPORTS
-import { ORDER_STATUS } from "../constants/orderStatus.js";
+import { Game } from "../components/Game.js";
 import { LineItem } from "../components/LineItem.js";
 
-export function Order(buyerId, paymentMethod, lineItem = []) {
+// # ORDER FACTORY
+export function Order({ buyerId, paymentMethod, lineItem = [] } = {}) {
   const id = crypto.randomUUID();
   const date = new Date().toISOString();
-  const totalCost = null;
+  let totalCost = null;
   let status = null;
 
   // # READ
@@ -14,8 +15,19 @@ export function Order(buyerId, paymentMethod, lineItem = []) {
   const getDate = () => date;
   const getPaymentMethod = () => paymentMethod;
   const getStatus = () => status;
+
+  // Order model only spits out a copy.
   const getLineItem = () => {
     return structuredClone(lineItem);
+  };
+
+  const getTotalCost = () => {
+    // Loop through all lineItems and grab all line item's subTotal
+    totalCost = lineItem.reduce((accumulator, currentSubTotal) => {
+      return accumulator + currentSubTotal.getSubTotal();
+    }, 0);
+
+    return totalCost;
   };
 
   // # MUTATE
@@ -31,5 +43,20 @@ export function Order(buyerId, paymentMethod, lineItem = []) {
     getStatus,
     getLineItem,
     setStatus,
+    getTotalCost,
   };
 }
+
+const line1 = LineItem({
+  gameId: "test1",
+  quantity: 100,
+});
+
+const order1 = Order({
+  buyerId: "testbuyer",
+  paymentMethod: "PayPal",
+  lineItem: [line1],
+});
+
+console.log(order1.getStatus());
+console.log(order1.getTotalCost());
