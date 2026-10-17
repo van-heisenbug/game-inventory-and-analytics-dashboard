@@ -1,0 +1,10 @@
+//
+export const ORDER_STATUS = Object.freeze({
+  PENDING: "PENDING",
+  ON_HOLD: "ON_HOLD",
+  PAID: "PAID",
+  SHIPPED: "SHIPPED",
+  DELIVERED: "DELIVERED",
+  CANCELED: "CANCELED",
+  RETURNED: "RETURNED",
+});
