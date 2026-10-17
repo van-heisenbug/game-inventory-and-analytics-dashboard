@@ -1,15 +1,15 @@
 // # IMPORTS
-import { STOCK_REASON } from "./constant.js";
+import { STOCK_CHANGE_REASON } from "../constants/stockChangeReason.js";
 
 // # GAME FACTORY
-function Game(name, stock = 0, price, genre) {
+export function Game({ name, stock, price, genre } = {}) {
   // # MUTABLE
   const stockHistory = [];
 
   // # Check README.md
   recordStockChange({
     quantity: stock,
-    reason: STOCK_REASON.INITIAL_STOCK,
+    reason: STOCK_CHANGE_REASON.INITIAL_STOCK,
   });
 
   const id = crypto.randomUUID();
@@ -95,12 +95,21 @@ function Game(name, stock = 0, price, genre) {
   };
 }
 
-const game1 = Game("Dota 2", 24, 2452, "RPG");
+const entry = {
+  name: "Dota 2",
+  stock: 24,
+  price: 2452,
+  genre: "RPG",
+};
+
+const game1 = Game(entry);
 console.log(game1.getStock());
 console.log(game1.getStockHistory());
-game1.addStock(6, STOCK_REASON.RESTOCK);
+game1.addStock(6, STOCK_CHANGE_REASON.RESTOCK);
 console.log(game1.getStock());
 console.log(game1.getStockHistory());
-console.log(game1.removeStock(20, STOCK_REASON.SALE));
+console.log(game1.removeStock(30, STOCK_CHANGE_REASON.SALE));
 console.log(game1.getStock());
 console.log(game1.getStockHistory());
+game1.removeStock(1);
+console.log(game1.getStock());

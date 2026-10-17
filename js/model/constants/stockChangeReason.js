@@ -1,5 +1,5 @@
 //
-export const STOCK_REASON = Object.freeze({
+export const STOCK_CHANGE_REASON = Object.freeze({
   INITIAL_STOCK: "INITIAL_STOCK",
   SALE: "SALE",
   RESTOCK: "RESTOCK",
