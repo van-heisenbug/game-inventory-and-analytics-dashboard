@@ -1,6 +1,4 @@
 // # IMPORTS
-import { Game } from "../components/Game.js";
-import { LineItem } from "../components/LineItem.js";
 
 // # ORDER FACTORY
 export function Order({ buyerId, paymentMethod, lineItem = [] } = {}) {
@@ -46,17 +44,3 @@ export function Order({ buyerId, paymentMethod, lineItem = [] } = {}) {
     getTotalCost,
   };
 }
-
-const line1 = LineItem({
-  gameId: "test1",
-  quantity: 100,
-});
-
-const order1 = Order({
-  buyerId: "testbuyer",
-  paymentMethod: "PayPal",
-  lineItem: [line1],
-});
-
-console.log(order1.getStatus());
-console.log(order1.getTotalCost());

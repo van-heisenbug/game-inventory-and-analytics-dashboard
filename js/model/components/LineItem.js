@@ -1,5 +1,4 @@
 // # IMPORTS
-import { Game } from "./Game.js";
 
 // # LINE ITEAM FACTORY
 export function LineItem({ gameId, quantity } = {}) {
@@ -15,37 +14,6 @@ export function LineItem({ gameId, quantity } = {}) {
     // # TODO
     // Loop through the inventory and find the game.
     // # TODO
-
-    // Testing for Order totalCost
-    const game1 = Game({
-      name: "Dota 1",
-      stock: 22,
-      price: 10000,
-      genre: "RPG",
-      testId: "test1",
-    });
-
-    const game2 = Game({
-      name: "Dota 2",
-      stock: 2,
-      price: 1000,
-      genre: "WINDOWS PC",
-      testId: "test2",
-    });
-
-    const game3 = Game({
-      name: "Star Craft 2",
-      stock: 12,
-      price: 12900,
-      genre: "MOBA",
-      testId: "test3",
-    });
-
-    const inventory = [];
-    inventory.push(game1);
-    inventory.push(game2);
-    inventory.push(game3);
-    // END OF MOCK INVENTORY ARRAY
 
     // Check README.md
     // TODO - still no actual inventory array created.
